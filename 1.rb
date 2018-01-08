@@ -4,7 +4,7 @@ add_u = lambda do |str|
   [str + "U"]
 end
 
-x_to_xx = lambda do |str|
+mx_to_mxx = lambda do |str|
   match = str.match(/^M(.*)$/)
   if match
     [str + match[1]]
@@ -36,7 +36,7 @@ drop_uu = lambda do |str|
 end
 
 
-rules = [add_u, x_to_xx, iii_to_u , drop_uu]
+rules = [add_u, mx_to_mxx, iii_to_u, drop_uu]
 
 until strings.index("MU")
   strings = strings.map do |str|
