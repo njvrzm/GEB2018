@@ -1,17 +1,35 @@
+import Data.List
+
 mi = "MI"
 
 is_mu str = (str == "MU")
 
-add_u str = [str ++ "U"]
+add_u str = [str ++ "U", str]
 
-mx_to_mxx ('M':str) = ['M':(str++str)]
+mx_to_mxx str@('M':rest) = ['M':(rest++rest), str]
 
-iii_to_u ('I':'I':'I':rest) = ('U':rest) : ( map ('I':) (iii_to_u ('I':'I':rest) )
-iii_to_u (ch:rest) = map (ch:) (iii_to_u rest)
-iii_to_u "" = [""]
+shift_and_recur f (ch:rest) = map (ch:) (f rest)
+shift_and_recur f [] = [[]]
 
-drop_uu ('U':'U':rest) = rest: (map ('U':) (drop_uu str))
-drop_uu (ch:rest) = map (ch:) (drop_uu rest)
-drop_uu "" = [""]
+iii_to_u str@('I':'I':'I':rest) = ('U':rest) : (shift_and_recur iii_to_u str)
+iii_to_u str = shift_and_recur iii_to_u str
 
-main = do return mi
+drop_uu str@('U':'U':rest) = rest : (shift_and_recur drop_uu str)
+drop_uu str = shift_and_recur drop_uu str
+
+rules = [add_u, mx_to_mxx, iii_to_u, drop_uu]
+
+apply_rules_to_theorem rules str = nub $ concatMap (\f -> f str) rules
+
+all_theorums_from theorems = nub $ theorems ++ more_theorems ++ (all_theorums_from more_theorems)
+  where more_theorems = concatMap (apply_rules_to_theorem rules) theorems
+
+stop_at pred (x:rest) = if (pred x)
+                          then [x]
+                          else x:(stop_at pred rest)
+
+main = do
+  let start_with = [mi]
+  let destination = is_mu
+  --let destination = (=="MIIU")
+  mapM_ putStrLn (stop_at destination $ all_theorums_from start_with)
