@@ -10,6 +10,10 @@ make ruby
 make haskell
 ```
 
+```bash
+make python
+```
+
 By default, only the first 100 theorems are displayed. To run until your system crashes, invoke the haskell or ruby programs directly.
 
 
