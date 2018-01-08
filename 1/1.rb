@@ -1,7 +1,12 @@
 strings = ["MI"]
 
 add_u = lambda do |str|
-  [str + "U"]
+  match = str.match(/I$/)
+  if match
+    [str + "U"]
+  else
+    []
+  end
 end
 
 mx_to_mxx = lambda do |str|
