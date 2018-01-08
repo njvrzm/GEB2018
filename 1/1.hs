@@ -31,9 +31,9 @@ apply_rules_to_theorem rules str = nub $ concatMap (\f -> f str) rules
 all_theorums_from rules theorems = nub $ theorems ++ more_theorems ++ (all_theorums_from rules more_theorems)
   where more_theorems = concatMap (apply_rules_to_theorem rules) theorems
 
-stop_at pred (x:rest) = if (pred x)
-                          then [x]
-                          else x:(stop_at pred rest)
+stop_at condition (x:rest) = if (condition x)
+                               then [x]
+                               else x:(stop_at condition rest)
 
 
 -- the program
