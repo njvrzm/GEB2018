@@ -41,16 +41,16 @@ rules = [add_u, mx_to_mxx, iii_to_u, drop_uu]
 already_printed = {}
 
 until strings.index("MU")
-  strings = strings.map do |str|
-    rules.map do |rule|
-      rule[str]
-    end
-  end.flatten.uniq
   strings.each do |s|
     unless already_printed[s]
       already_printed[s] = true
       puts s
     end
   end
+  strings = strings.map do |str|
+    rules.map do |rule|
+      rule[str]
+    end
+  end.flatten.uniq
 end
 
