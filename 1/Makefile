@@ -4,3 +4,6 @@ haskell:
 
 ruby:
 	ruby 1.rb | head -n 100 | tee results.txt
+
+python:
+	python -u 1.py | head -n 100 | tee results.txt
